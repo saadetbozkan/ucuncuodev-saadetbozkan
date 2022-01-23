@@ -2,7 +2,7 @@
 
 namespace Entity
 {
-    public class VehicleEntity
+    public class VehiclePutEntity
     {
         public string VehicleName { get; set; }
         public string VehiclePlate { get; set; }

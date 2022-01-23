@@ -16,12 +16,16 @@ namespace Data.ContainerRepo
         }
         public bool Delete(long id)
         {
-            var vehicle = dbSet.Find(id);
+
+            var listOfVehicle = dbSet.Include(v => v.Container).ToList();
+            var vehicle = listOfVehicle.Where(v => v.Id == id).FirstOrDefault();
+
+            if (vehicle == null)
+                return false;
+
             //delete vehicle with its containers
-            DbSet<Container> dbSet2 = context.Set<Container>();
-            var listOfContainer = dbSet2.Where(s => s.VehicleId == vehicle.Id);
-            dbSet.Remove(vehicle);           
-            dbSet2.RemoveRange(listOfContainer);
+            dbSet.Remove(vehicle);
+
             return true;
         }
     }

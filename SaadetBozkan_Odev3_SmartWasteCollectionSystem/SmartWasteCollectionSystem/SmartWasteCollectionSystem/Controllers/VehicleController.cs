@@ -16,9 +16,7 @@ namespace SmartWasteCollectionSystem.Controllers
     public class VehicleController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
-
         private readonly ILogger<VehicleController> logger;
-
         private readonly IMapper mapper;
 
         public VehicleController(ILogger<VehicleController> logger, IUnitOfWork unitOfWork, IMapper mapper)
@@ -32,14 +30,11 @@ namespace SmartWasteCollectionSystem.Controllers
         public IActionResult GetAll()
         {
             var listOfVehicle = unitOfWork.Vehicle.GetAll();
-            unitOfWork.Complate();
-
-            var entities = mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleEntity>>(listOfVehicle);
-
+            var entities = mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehiclePutEntity>>(listOfVehicle);
             return Ok(entities);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id")]
         public IActionResult GetById(long id)
         {
             var vehicle = unitOfWork.Vehicle.GetById(id);
@@ -47,33 +42,30 @@ namespace SmartWasteCollectionSystem.Controllers
             {
                 return NotFound();
             }
-            unitOfWork.Complate();
 
-            var entity = mapper.Map<Vehicle, VehicleEntity>(vehicle);
+            var entity = mapper.Map<Vehicle, VehiclePutEntity>(vehicle);
             return Ok(entity);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] VehicleEntity entity)
+        public IActionResult Post([FromBody] VehiclePutEntity entity)
         {
-            var vehicle = mapper.Map<VehicleEntity, Vehicle>(entity);
+            var vehicle = mapper.Map<VehiclePutEntity, Vehicle>(entity);
             var response = unitOfWork.Vehicle.Add(vehicle);
 
             unitOfWork.Complate();
-
             return CreatedAtAction("Post", response);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] VehicleEntity entity, long id)
+        public IActionResult Put([FromBody] VehiclePutEntity entity, long id)
         {
-            var vehicle = mapper.Map<VehicleEntity, Vehicle>(entity);
+            var vehicle = mapper.Map<VehiclePutEntity, Vehicle>(entity);
 
             vehicle.Id = id;
             var response = unitOfWork.Vehicle.Update(vehicle);
 
             unitOfWork.Complate();
-
             return Ok();
         }
 
@@ -83,7 +75,6 @@ namespace SmartWasteCollectionSystem.Controllers
             var response = unitOfWork.Vehicle.Delete(id);
 
             unitOfWork.Complate();
-
             return Ok();
         }
     }

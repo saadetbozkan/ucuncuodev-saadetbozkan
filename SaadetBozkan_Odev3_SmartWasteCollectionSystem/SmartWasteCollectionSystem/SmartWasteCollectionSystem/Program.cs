@@ -21,6 +21,12 @@ namespace SmartWasteCollectionSystem
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+
+                    // logging
+                    webBuilder.ConfigureLogging((ctx, logging) =>
+                    {
+                        logging.AddConfiguration(ctx.Configuration.GetSection("Logging"));
+                    });
                 });
     }
 }

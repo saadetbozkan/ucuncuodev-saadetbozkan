@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Access\**" />
+    <EmbeddedResource Remove="Access\**" />
+    <None Remove="Access\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
@@ -15,10 +21,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.9" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.15" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Access\" />
   </ItemGroup>
 
 </Project>

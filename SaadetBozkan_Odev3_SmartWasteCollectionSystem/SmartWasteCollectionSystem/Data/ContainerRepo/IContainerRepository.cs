@@ -11,6 +11,7 @@ namespace Data.ContainerRepo
     public interface IContainerRepository : IGenericRepository<Container>
     {
         IEnumerable<Container> GetByVehicleId(long id);
+        bool DeleteRange(IEnumerable<Container> container);
     }
    
     

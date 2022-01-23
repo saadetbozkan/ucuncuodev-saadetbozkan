@@ -2,7 +2,7 @@
 
 namespace Entity
 {
-    public class ContainerEntity
+    public class ContainerPostEntity
     {
         public string ContainerName { get; set; }
         public decimal Latitude { get; set; }

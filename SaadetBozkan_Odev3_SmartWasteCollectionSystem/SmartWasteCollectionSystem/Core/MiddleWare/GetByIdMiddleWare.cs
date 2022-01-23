@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.MiddleWare
@@ -18,7 +14,7 @@ namespace Core.MiddleWare
 
         public async Task Invoke(HttpContext context) 
         {
-            if(context.Request.Method == "GET" && context.Request.Path.StartsWithSegments("/api/Vehicle") && context.Request.Path.Value.Length > "/api/Vehicle/".Length)
+            if(context.Request.Method == "GET" && context.Request.Path.StartsWithSegments("/api/Vehicle/id"))
             {
                 context.Response.StatusCode = 403;  
                 return;

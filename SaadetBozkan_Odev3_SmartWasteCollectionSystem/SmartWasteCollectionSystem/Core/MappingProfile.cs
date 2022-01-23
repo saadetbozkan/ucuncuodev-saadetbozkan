@@ -9,10 +9,12 @@ namespace Core
     {
         public MappingProfile()
         {
-            CreateMap<Vehicle, VehicleEntity>();
-            CreateMap<VehicleEntity, Vehicle>();
-            CreateMap<ContainerEntity, Container>();
-            CreateMap<Container, ContainerEntity>();
+            CreateMap<Vehicle, VehiclePutEntity>();
+            CreateMap<VehiclePutEntity, Vehicle>();
+            CreateMap<ContainerPutEntity, Container>();
+            CreateMap<Container, ContainerPutEntity>();
+            CreateMap<ContainerPostEntity, Container>();
+            CreateMap<Container, ContainerPostEntity>();
         }
 
     }

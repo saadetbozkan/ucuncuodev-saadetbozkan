@@ -17,7 +17,6 @@ namespace SmartWasteCollectionSystem.Controllers
     public class ContainerController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
-
         private readonly ILogger<ContainerController> logger;
         private readonly IMapper mapper;
 
@@ -32,9 +31,9 @@ namespace SmartWasteCollectionSystem.Controllers
         public IActionResult GetAll()
         {
             var listOfContainer = unitOfWork.Container.GetAll();
-            unitOfWork.Complate();
 
-            var entities = mapper.Map<List<Container>, List<ContainerEntity>>(listOfContainer.ToList());
+
+            var entities = mapper.Map<List<Container>, List<ContainerPutEntity>>(listOfContainer.ToList());
             return Ok(entities);
         }
 
@@ -48,27 +47,26 @@ namespace SmartWasteCollectionSystem.Controllers
             }
             unitOfWork.Complate();
 
-            var entity = mapper.Map<Container, ContainerEntity>(container);
+            var entity = mapper.Map<Container, ContainerPutEntity>(container);
             return Ok(entity);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] ContainerEntity entity)
+        public IActionResult Post([FromBody] ContainerPostEntity entity)
         {
-            var container = mapper.Map<ContainerEntity, Container>(entity);
+            var container = mapper.Map<ContainerPostEntity, Container>(entity);
 
             var response = unitOfWork.Container.Add(container);
 
             unitOfWork.Complate();
-
             return CreatedAtAction("Post", response);
         }
 
-        // Update withoud vehicleId
+        // Update without vehicleId
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] ContainerEntity entity, long id)
+        public IActionResult Put([FromBody] ContainerPutEntity entity, long id)
         {
-            var container = mapper.Map<ContainerEntity, Container>(entity);
+            var container = mapper.Map<ContainerPutEntity, Container>(entity);
 
             container.Id = id;
 
@@ -85,7 +83,6 @@ namespace SmartWasteCollectionSystem.Controllers
             var response = unitOfWork.Container.Delete(id);
 
             unitOfWork.Complate();
-
             return Ok();
         }
 
@@ -94,10 +91,7 @@ namespace SmartWasteCollectionSystem.Controllers
         public IActionResult GetByVehicleId([FromQuery] long vehicleId)
         {
             var containers = unitOfWork.Container.GetByVehicleId(vehicleId);
-
-            unitOfWork.Complate();
-
-            var entities = mapper.Map<List<Container>, List<ContainerEntity>>(containers.ToList());
+            var entities = mapper.Map<List<Container>, List<ContainerPutEntity>>(containers.ToList());
             return Ok(entities);
         }
 
@@ -126,9 +120,7 @@ namespace SmartWasteCollectionSystem.Controllers
                     resultContainerList.ElementAt<List<Container>>(i).Add(containerOfList.ElementAt<Container>(index));
                 }
             }
-
-            unitOfWork.Complate();
-            var entities = mapper.Map< List<List<Container>>, List<List <ContainerEntity>>>(resultContainerList);
+            var entities = mapper.Map<List<List<Container>>, List<List <ContainerPutEntity>>>(resultContainerList);
             return Ok(entities);
         }
     }

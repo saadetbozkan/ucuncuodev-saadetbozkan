@@ -9,8 +9,9 @@ namespace Data.DataModel
         public string ContainerName { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
-        [ForeignKey("Vehicle")]
-        public long VehicleId { get; set; }        
+        public long VehicleId { get; set; }
+
+        [ForeignKey("VehicleId")]
         public Vehicle Vehicle { get; set; }
     }
 }

@@ -13,14 +13,13 @@ namespace Data.Generic
     {
         private readonly ILogger logger;
         protected CollectionSystemDbContext context;
-        internal DbSet<T> dbSet;
+        protected DbSet<T> dbSet;
         public GenericRepository(CollectionSystemDbContext context, ILogger logger)
         {
             this.context = context;
             this.logger = logger;
-
             this.dbSet = context.Set<T>();
-        }
+         }
 
         public bool Add(T entity)
         {
